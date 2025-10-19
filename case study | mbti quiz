@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    const char *questions[20] = {
+        
+        "1) You enjoy being the center of attention. (1) Agree (2) Disagree",
+        "2) You prefer spending time with others over being alone. (1) Agree (2) Disagree",
+        "3) You find it easy to start conversations with new people. (1) Agree (2) Disagree",
+        "4) You feel recharged after social interactions. (1) Agree (2) Disagree",
+        "5) You enjoy group activities more than solo tasks. (1) Agree (2) Disagree",
+        "6) You focus on present realities more than future possibilities. (1) Agree (2) Disagree",
+        "7) You prefer facts over theories. (1) Agree (2) Disagree",
+        "8) You are more interested in practical applications than abstract ideas. (1) Agree (2) Disagree",
+        "9) You notice small details that others often miss. (1) Agree (2) Disagree",
+        "10) You rely on experience more than imagination. (1) Agree (2) Disagree",
+        "11) You make decisions based on logic rather than emotions. (1) Agree (2) Disagree",
+        "12) You value fairness more than compassion. (1) Agree (2) Disagree",
+        "13) You find it easier to stay objective during conflicts. (1) Agree (2) Disagree",
+        "14) You prioritize truth over harmony. (1) Agree (2) Disagree",
+        "15) You are more focused on being efficient than being caring. (1) Agree (2) Disagree",
+        "16) You prefer having a clear plan instead of being spontaneous. (1) Agree (2) Disagree",
+        "17) You like to finish tasks before relaxing. (1) Agree (2) Disagree",
+        "18) You feel uncomfortable when things are unorganized. (1) Agree (2) Disagree",
+        "19) You enjoy following schedules and deadlines. (1) Agree (2) Disagree",
+        "20) You like making decisions early rather than keeping options open. (1) Agree (2) Disagree"
+    };
+
+    int counts[4] = {0,0,0,0};
+    int mapping[20] = {0,0,0,0,0, 1,1,1,1,1, 2,2,2,2,2, 3,3,3,3,3};
+
+    char input[10];
+
+    printf("MBTI Quiz\n");
+    printf("Answer each question by typing '1' or '2' and pressing Enter.\n\n");
+
+    for (int i = 0; i < 20; i++) {
+        printf("%s\n", questions[i]);
+        while (1) {
+            if (!fgets(input, sizeof(input), stdin)) return 0;
+            if (input[0] == '1') {
+                break; 
+            } else if (input[0] == '2') {
+                counts[mapping[i]]++;
+                break;
+            } else {
+                printf("Invalid input. Type 1 or 2 only.\n");
+            }
+        }
+        printf("\n");
+    }
+
+    char result[5];
+    result[0] = (counts[0] >= 3) ? 'I' : 'E';
+    result[1] = (counts[1] >= 3) ? 'N' : 'S';
+    result[2] = (counts[2] >= 3) ? 'F' : 'T';
+    result[3] = (counts[3] >= 3) ? 'P' : 'J';
+    result[4] = '\0';
+
+    const char *types[16] = {
+        "ESTJ","ESTP","ESFJ","ESFP",
+        "ENTJ","ENTP","ENFJ","ENFP",
+        "ISTJ","ISTP","ISFJ","ISFP",
+        "INTJ","INTP","INFJ","INFP"
+    };
+
+    const char *descriptions[16] = {
+        "Practical, organized, and responsible.",
+        "Adaptable, energetic, and action-oriented.",
+        "Caring, loyal, and community-minded.",
+        "Friendly, fun-loving, and expressive.",
+        "Strategic, confident, and natural leaders.",
+        "Inventive, curious, and quick thinkers.",
+        "Empathetic, inspiring, and supportive.",
+        "Idealistic, creative, and enthusiastic.",
+        "Hardworking, dependable, and detail-oriented.",
+        "Quiet, realistic, and efficient.",
+        "Loyal, considerate, and kind-hearted.",
+        "Gentle, adaptable, and artistic.",
+        "Independent, focused, and visionary.",
+        "Analytical, objective, and innovative.",
+        "Insightful, intuitive, and compassionate.",
+        "Creative, idealistic, and value-driven."
+    };
+
+    int i0 = (result[0] == 'I') ? 1 : 0;
+    int i1 = (result[1] == 'N') ? 1 : 0;
+    int i2 = (result[2] == 'F') ? 1 : 0;
+    int i3 = (result[3] == 'P') ? 1 : 0;
+    int index = (i0 << 3) | (i1 << 2) | (i2 << 1) | i3;
+
+    printf("Your MBTI type: %s\n", result);
+    printf("Description: %s\n", descriptions[index]);
+
+    return 0;
+}
